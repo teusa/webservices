@@ -39,7 +39,7 @@ public class IvcWebService implements IvcWebServiceSkeletonInterface {
             
             String responseRequest = request.requestRestServer(SERVER_REST, parametersStablishment.setStablishmentParameters(inIvcWebService));
             
-            LOGGER.log(Level.INFO, "Version: {0}\n REST: {1}\n Response: {2}", new Object[]{"003", SERVER_REST, responseRequest});
+            LOGGER.log(Level.INFO, "Version: {0}\n REST: {1}\n Response: {2}", new Object[]{"v002-Valores de los parametros en Inglés", SERVER_REST, responseRequest});
             
             outIvcWebService.setMessage("Result: " + responseRequest);
             
