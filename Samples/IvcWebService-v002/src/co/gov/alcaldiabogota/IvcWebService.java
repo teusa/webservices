@@ -17,8 +17,8 @@ import java.util.logging.Logger;
  */
 public class IvcWebService implements IvcWebServiceSkeletonInterface {
 
-    //private static final String SERVER_REST = "http://192.168.88.244/apirest_ivc/backend/web/api/establishment";
-    private static final String SERVER_REST = "http://54.149.120.9/apirest_ivc/backend/web/api/establishment";
+    private static final String SERVER_REST = "http://192.168.88.244/apirest_ivc/backend/web/api/establishment";
+    //private static final String SERVER_REST = "http://54.149.120.9/apirest_ivc/backend/web/api/establishment";
     private final static Logger LOGGER = Logger.getLogger(IvcWebService.class.getName());
     
     @Override
