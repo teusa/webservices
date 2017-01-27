@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<axis2 xmlns="http://www.netbeans.org/ns/axis2/1">
-    <service name="IvcWebService">
-        <service-class>co.gov.alcaldiabogota.IvcWebService</service-class>
-        <wsdl-url>file:/home/jesusrodriguezmiranda/Proyectos/IVC/Desarrollo/Alpha/WebServices/Soap/wsdl/ivcWebService-version-003.wsdl</wsdl-url>
-        <java-generator databindingName="adb" serviceName="IvcWebService" portName="IvcWebServiceHttpSoap11Endpoint" packageName="co.gov.alcaldiabogota.ivcwebservice" sei="true" options="-s"/>
-    </service>
-</axis2>
