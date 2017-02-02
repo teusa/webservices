@@ -97,22 +97,30 @@ public class RestClient {
                 }
             }
             builder.append("\n");
-        }        
+        }
+
+        //builder.append(readBody(connection.getInputStream()).toString("UTF-8"));
+        
         return builder;
     }
     
     /*private String readBodyAsString(InputStream inputStream, String encoding) throws IOException {
         return readBody(inputStream).toString(encoding);
     }
-
-    private ByteArrayOutputStream readBody(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int length = 0;
-        while ((length = inputStream.read(buffer)) != -1) {
-            baos.write(buffer, 0, length);
+    */
+    private ByteArrayOutputStream readBody(InputStream inputStream) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                baos.write(buffer, 0, length);
+            }
+            return baos;
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
         }
-        return baos;
-    }*/
+    }
 
 }
