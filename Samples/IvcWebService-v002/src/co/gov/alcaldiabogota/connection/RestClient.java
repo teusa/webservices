@@ -46,7 +46,10 @@ public class RestClient {
                     wr.write("&");
                 }
                 wr.flush();
-
+                
+                StringBuilder headers = viewHeaders(connection);
+                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n", new Object[]{serverRest, headers});                
+                
                 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
                         String line = reader.readLine();
@@ -55,35 +58,7 @@ public class RestClient {
                         }
                     }
                 }
-
-                StringBuilder builder = new StringBuilder();
-                builder.append(connection.getResponseCode())
-                        .append(" ")
-                        .append(connection.getResponseMessage())
-                        .append("\n");
-                Map<String, List<String>> map = connection.getHeaderFields();
-                for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-                    if (entry.getKey() == null) {
-                        continue;
-                    }
-                    builder.append(entry.getKey())
-                            .append(": ");
-
-                    List<String> headerValues = entry.getValue();
-                    Iterator<String> it = headerValues.iterator();
-                    if (it.hasNext()) {
-                        builder.append(it.next());
-
-                        while (it.hasNext()) {
-                            builder.append(", ")
-                                    .append(it.next());
-                        }
-                    }
-
-                    builder.append("\n");
-                }
-
-                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n Body: {2}\n ", new Object[]{serverRest, builder, readBodyAsString(connection.getInputStream(), "UTF-8")});
+                
                 connection.disconnect();
 
                 return connection.getResponseMessage();
@@ -98,7 +73,35 @@ public class RestClient {
         }
     }
     
-    public String readBodyAsString(InputStream inputStream, String encoding) throws IOException {
+    private StringBuilder viewHeaders(HttpURLConnection connection) throws IOException {        
+        StringBuilder builder = new StringBuilder();        
+        builder.append(connection.getResponseCode())
+                .append(" ")
+                .append(connection.getResponseMessage())
+                .append("\n");
+        Map<String, List<String>> map = connection.getHeaderFields();        
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            if (entry.getKey() == null) {
+                continue;
+            }
+            builder.append(entry.getKey())
+                    .append(": ");
+            List<String> headerValues = entry.getValue();
+            Iterator<String> it = headerValues.iterator();
+            if (it.hasNext()) {
+                builder.append(it.next());
+
+                while (it.hasNext()) {
+                    builder.append(", ")
+                            .append(it.next());
+                }
+            }
+            builder.append("\n");
+        }        
+        return builder;
+    }
+    
+    /*private String readBodyAsString(InputStream inputStream, String encoding) throws IOException {
         return readBody(inputStream).toString(encoding);
     }
 
@@ -110,7 +113,6 @@ public class RestClient {
             baos.write(buffer, 0, length);
         }
         return baos;
-    }
-
+    }*/
 
 }
