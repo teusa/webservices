@@ -83,7 +83,7 @@ public class RestClient {
                     builder.append("\n");
                 }
 
-                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n Body: {2}\n ", new Object[]{serverRest, builder, readFullyAsString(connection.getInputStream(), "UTF-8")});
+                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n Body: {2}\n ", new Object[]{serverRest, builder, readBodyAsString(connection.getInputStream(), "UTF-8")});
                 connection.disconnect();
 
                 return connection.getResponseMessage();
@@ -98,11 +98,11 @@ public class RestClient {
         }
     }
     
-    public String readFullyAsString(InputStream inputStream, String encoding) throws IOException {
-        return readFully(inputStream).toString(encoding);
+    public String readBodyAsString(InputStream inputStream, String encoding) throws IOException {
+        return readBody(inputStream).toString(encoding);
     }
 
-    private ByteArrayOutputStream readFully(InputStream inputStream) throws IOException {
+    private ByteArrayOutputStream readBody(InputStream inputStream) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
         int length = 0;
