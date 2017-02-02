@@ -7,7 +7,7 @@
 package co.gov.alcaldiabogota.ivcwebservice;
 
 public class IvcWebServiceExceptionException extends java.lang.Exception {
-    private static final long serialVersionUID = 1485276333229L;
+    private static final long serialVersionUID = 1485882270085L;
     private co.gov.alcaldiabogota.ivcwebservice.IvcWebServiceException faultMessage;
 
     public IvcWebServiceExceptionException() {

@@ -1,13 +1,15 @@
 package co.gov.alcaldiabogota.connection;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +41,7 @@ public class RestClient {
                 OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
 
                 for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+                    //LOGGER.log(Level.INFO, "JSON: {0}\n", new Object[]{URLEncoder.encode(parameter.getKey(), "UTF-8") + "=" + URLEncoder.encode(parameter.getValue(), "UTF-8")});
                     wr.write(URLEncoder.encode(parameter.getKey(), "UTF-8") + "=" + URLEncoder.encode(parameter.getValue(), "UTF-8"));
                     wr.write("&");
                 }
@@ -53,19 +56,40 @@ public class RestClient {
                     }
                 }
 
-                String headers = "";
-                Map<String, List<String>> mapHeaders = connection.getHeaderFields();
-                for (Map.Entry<String, List<String>> entry : mapHeaders.entrySet()) {
-                    headers += entry.getKey() + " = " + entry.getValue() + "\n";
+                StringBuilder builder = new StringBuilder();
+                builder.append(connection.getResponseCode())
+                        .append(" ")
+                        .append(connection.getResponseMessage())
+                        .append("\n");
+                Map<String, List<String>> map = connection.getHeaderFields();
+                for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                    if (entry.getKey() == null) {
+                        continue;
+                    }
+                    builder.append(entry.getKey())
+                            .append(": ");
+
+                    List<String> headerValues = entry.getValue();
+                    Iterator<String> it = headerValues.iterator();
+                    if (it.hasNext()) {
+                        builder.append(it.next());
+
+                        while (it.hasNext()) {
+                            builder.append(", ")
+                                    .append(it.next());
+                        }
+                    }
+
+                    builder.append("\n");
                 }
 
-                LOGGER.log(Level.INFO, "URL: {0}\n Response code: {1}\n Headers: {2}", new Object[]{serverRest, String.valueOf(connection.getResponseCode()), headers});
+                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n Body: {2}\n ", new Object[]{serverRest, builder, readFullyAsString(connection.getInputStream(), "UTF-8")});
                 connection.disconnect();
-                
+
                 return connection.getResponseMessage();
 
             } else {
-                return "";
+                return "No object establishment defined";
             }
 
         } catch (IOException ex) {
@@ -73,5 +97,20 @@ public class RestClient {
             return "Error";
         }
     }
+    
+    public String readFullyAsString(InputStream inputStream, String encoding) throws IOException {
+        return readFully(inputStream).toString(encoding);
+    }
+
+    private ByteArrayOutputStream readFully(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length = 0;
+        while ((length = inputStream.read(buffer)) != -1) {
+            baos.write(buffer, 0, length);
+        }
+        return baos;
+    }
+
 
 }

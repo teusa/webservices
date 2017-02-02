@@ -19,6 +19,7 @@ public class IvcWebService implements IvcWebServiceSkeletonInterface {
 
     private static final String SERVER_REST = "http://192.168.88.244/apirest_ivc/backend/web/api/establishment";
     //private static final String SERVER_REST = "http://54.149.120.9/apirest_ivc/backend/web/api/establishment";
+    //private static final String SERVER_REST = "http://192.168.88.193/stable/apirest_ivc/backend/web/api/establishment";    
     private final static Logger LOGGER = Logger.getLogger(IvcWebService.class.getName());
     
     @Override
@@ -35,15 +36,10 @@ public class IvcWebService implements IvcWebServiceSkeletonInterface {
             InIvcWebServiceResponse inIvcWebServiceResponse = new InIvcWebServiceResponse();           
             
             Stablishment parametersStablishment = new Stablishment();            
-            RestClient request = new RestClient();
-            
-            String responseRequest = request.requestRestServer(SERVER_REST, parametersStablishment.setStablishmentParameters(inIvcWebService));
-            
-            LOGGER.log(Level.INFO, "Version: {0}\n REST: {1}\n Response: {2}", new Object[]{"v002-Valores de los parametros en Inglés", SERVER_REST, responseRequest});
-            
+            RestClient request = new RestClient();            
+            String responseRequest = request.requestRestServer(SERVER_REST, parametersStablishment.setStablishmentParameters(inIvcWebService));            
+            LOGGER.log(Level.INFO, "Version: {0}\n REST: {1}\n Response: {2}", new Object[]{"v002-Valores de los parametros en Inglés", SERVER_REST, responseRequest});           
             outIvcWebService.setMessage("Result: " + responseRequest);
-            
-            //outIvcWebService.getResponse_code();
             
             inIvcWebServiceResponse.set_return(outIvcWebService);
             

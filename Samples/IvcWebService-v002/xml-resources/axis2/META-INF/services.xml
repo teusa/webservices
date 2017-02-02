@@ -3,10 +3,17 @@
     <service name="IvcWebService">
         <messageReceivers>
             <messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="co.gov.alcaldiabogota.ivcwebservice.IvcWebServiceMessageReceiverInOut"/>
+            <!--messageReceiver mep="http://www.w3.org/ns/wsdl/in-out" class="org.apache.axis2.json.gson.rpc.JsonRpcMessageReceiver"/-->
+            <messageReceiver mep="http://www.w3.org/ns/wsdl/in-only" class="org.apache.axis2.json.gson.rpc.JsonInOnlyRPCMessageReceiver"/>
         </messageReceivers>
         <parameter name="ServiceClass">co.gov.alcaldiabogota.IvcWebService</parameter>
         <parameter name="useOriginalwsdl">true</parameter>
-        <parameter name="modifyUserWSDLPortAddress">true</parameter>
+        <parameter name="modifyUserWSDLPortAddress">true</parameter>        
+        <parameter name="xmlToJsonNamespaceMap">
+            <mappings>
+                <mapping xmlNamespace="http://ivcWebService.alcaldiabogota.gov.co" jsonNamespace="ivc"/>
+            </mappings>
+        </parameter>
         <operation name="inIvcWebService" mep="http://www.w3.org/ns/wsdl/in-out" namespace="http://ivcWebService.alcaldiabogota.gov.co">
             <actionMapping>urn:inIvcWebService</actionMapping>
             <outputActionMapping>urn:inIvcWebServiceResponse</outputActionMapping>

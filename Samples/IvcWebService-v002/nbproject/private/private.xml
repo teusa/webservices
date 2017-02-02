@@ -5,5 +5,12 @@
         <group name="Java">
             <file>file:/home/jesusrodriguezmiranda/Proyectos/IVC/Desarrollo/Alpha/WebServices/Soap/IvcWebService-003/src/co/gov/alcaldiabogota/IvcWebService.java</file>
         </group>
+        <group>
+            <file>file:/home/jesusrodriguezmiranda/Proyectos/IVC/Desarrollo/Alpha/WebServices/Repositorio/webservices/Samples/IvcWebService-v002/src/co/gov/alcaldiabogota/IvcWebService.java</file>
+        </group>
+        <group name="Webservices">
+            <file>file:/home/jesusrodriguezmiranda/Proyectos/IVC/Desarrollo/Alpha/WebServices/Repositorio/webservices/Samples/IvcWebService-v002/src/co/gov/alcaldiabogota/parameters/Stablishment.java</file>
+            <file>file:/home/jesusrodriguezmiranda/Proyectos/IVC/Desarrollo/Alpha/WebServices/Repositorio/webservices/Samples/IvcWebService-v002/src/co/gov/alcaldiabogota/IvcWebService.java</file>
+        </group>
     </open-files>
 </project-private>
