@@ -67,8 +67,7 @@ public class IvcWebServices {
     }
 
     public OMElement synchronize(OMElement requestElement) throws XMLStreamException, Exception {
-        // TODO: to generate response, the following code can be customized:
-        
+                
         String entity_id = getRequestParam(requestElement, "entity_id");
         String table_name = getRequestParam(requestElement, "table_name");
         
