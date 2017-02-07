@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<axis2 xmlns="http://www.netbeans.org/ns/axis2/1">
+    <service name="IvcWebServices">
+        <service-class>co.gov.alcaldiabogota.IvcWebServices</service-class>
+        <wsdl-url>file:/home/jesusrodriguezmiranda/Proyectos/IVC/Desarrollo/Alpha/WebServices/Repositorio/webservices/wsdl/IvcWebService.wsdl</wsdl-url>
+    </service>
+</axis2>

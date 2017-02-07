@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceGroup>
+    <service name="IvcWebServices">
+        <description>IvcWebServices service</description>
+        <operation name="synchronize">
+            <messageReceiver class="org.apache.axis2.receivers.RawXMLINOutMessageReceiver"/>
+        </operation>
+        <parameter name="ServiceClass">co.gov.alcaldiabogota.IvcWebServices</parameter>
+    </service>
+</serviceGroup>
