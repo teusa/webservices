@@ -45,22 +45,20 @@ public class IvcWebServicesTest {
     @Test
     public void testSynchronize() throws Exception {
         System.out.println("synchronize");
+        
+        String entity_id = "2";
+        String table_name = "stablishment";
+        
+        String xml = "<xsd:synchronize xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\">\n"
+                + "         <xsd:entity_id>"+entity_id+"</xsd:entity_id>\n"
+                + "         <xsd:table_name>"+table_name+"</xsd:table_name>\n"
+                + "      </xsd:synchronize>";
 
-        String xml = "<?xml version='1.0' encoding='UTF-8'?>"
-                + "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://ivcWebServices.alcaldiabogota.gov.co/\">\n"
-                + "<soapenv:Header/>\n"
-                + "<soapenv:Body>\n"
-                + "<xsd:synchronize>\n"
-                + "<xsd:entity_id>1</xsd:entity_id>\n"
-                + "<xsd:table_name>Salud</xsd:table_name>\n"
-                + "</xsd:synchronize>\n"
-                + "</soapenv:Body>\n"
-                + "</soapenv:Envelope>";
         OMElement requestElement = AXIOMUtil.stringToOM(xml);
         IvcWebServices instance = new IvcWebServices();
-        String expResult = "Verify data => Entity: Null Value, Table: Null Value";
+        String expResult = "";
         OMElement result = instance.synchronize(requestElement);
-        assertEquals(expResult, result);        
+        assertEquals(expResult, result);
     }
 
 }

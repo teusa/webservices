@@ -11,13 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  *
  * @author jesusrodriguezmiranda
  */
 public class Utils {
-     private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
+
+    private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
 
     public static boolean isNumeric(String str) {
         try {
@@ -29,27 +33,48 @@ public class Utils {
     }
 
     public static boolean isTableName(String entityId, String tableName) {
-        Map<String, String> entities = new HashMap<>();
-        entities.put("1", "Ambiente");
-        entities.put("2", "Salud");
-        entities.put("3", "Gobierno");
-        entities.put("4", "Bomberos");
-        
-        Boolean is = false;      
-      
 
-        for (Map.Entry<String, String> entity : entities.entrySet()) {
-            
-            
-            if (isNumeric(entityId) && ((entity.getValue() == null ? tableName == null : entity.getValue().toLowerCase().equals(tableName.toLowerCase())) 
-                    && (entity.getKey() == null ? entityId == null : entity.getKey().equals(entityId)))) {
-                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{entity.getKey(), entity.getValue()});
-                is = true;
+        Boolean is = false;
+        Boolean isEntity = false;
+        Boolean isAction = false;
+
+        Entities entitiesObject = new Entities();
+        Actions actionsObject = new Actions();
+
+        Map<String, String> entities = entitiesObject.Entities();
+        Map<String, String> actions = actionsObject.Actions();
+
+        for (Map.Entry<String, String> action : actions.entrySet()) {
+
+            if (action.getValue().toLowerCase().equals(tableName.toLowerCase())) {
+                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{action.getKey(), action.getValue()});
+                isEntity = true;
             }
-              
+
+        }
+        for (Map.Entry<String, String> entity : entities.entrySet()) {
+            is = false;
+            if (entity.getKey().equals(entityId)) {
+                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{entity.getKey(), entity.getValue()});
+                isAction = true;
+            }
+
+        }
+
+        if (isEntity && isAction) {
+            is = true;
         }
 
         return is;
+    }
+
+    public static String getCharacterDataFromElement(Element e) {
+        Node child = e.getFirstChild();
+        if (child instanceof CharacterData) {
+            CharacterData cd = (CharacterData) child;
+            return cd.getData();
+        }
+        return "?";
     }
 
 }

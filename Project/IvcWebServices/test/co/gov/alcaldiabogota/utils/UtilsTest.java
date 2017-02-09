@@ -55,12 +55,12 @@ public class UtilsTest {
      * Test of isTableName method, of class Utils.
      */
     @Test
-    public void testIsTableNameBomberos() {
+    public void testIsTableName() {
         System.out.println("isTableName");
-        String id = "2";
-        String str = "SAlud";
+        String entityId = "2";
+        String tableName = "stablishment";
         boolean expResult = true;
-        boolean result = Utils.isTableName(id, str);
+        boolean result = Utils.isTableName(entityId, tableName);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
