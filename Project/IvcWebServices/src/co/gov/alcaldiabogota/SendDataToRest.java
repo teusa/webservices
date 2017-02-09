@@ -36,34 +36,34 @@ public class SendDataToRest {
     public static String processDataFromSoap(String xml, String requestChildName) throws XMLStreamException, ParserConfigurationException, SAXException, IOException {
         try {
 
-            //String childValue = "";
-            //String IdSecretaria = "";
-            //String IdEstablecimientoSDS = "";
-            String RazonSocial = "";
-            String NombreComercial = "";
-            String NITEstablecimiento = "";
-            String Sede = "";
-            String Direccion = "";
-            String codLocalidad = "";
-            String NombreLocalidad = "";
-            String codUPZ = "";
-            String NombreUPZ = "";
-            String CodBarrio = "";
-            String NombreBarrio = "";
-            String Telefono1 = "";
-            String Telefono2 = "";
-            String CorreoElectronico = "";
-            String NombrePropietario = "";
-            String TipoDocumentoPropietario = "";
-            String NumeroDocumentoPropietario = "";
-            String NombreRepLegal = "";
-            String TipoDocumentoRepLegal = "";
-            String NumeroDocumentoRepLegal = "";
-            String NumeroMatriculaEstablecimiento = "";
-            String CodTipoEstablecimiento = "";
-            String NombreTipoEstablecimiento = "";
-            String CodCIIU = "";
-            String NombreActividadEconomica = "";
+            //String childValue;
+            //String IdSecretaria;
+            //String IdEstablecimientoSDS;
+            String RazonSocial= "";
+            String NombreComercial= "";
+            String NITEstablecimiento= "";
+            String Sede= "";
+            String Direccion= "";
+            String codLocalidad= "";
+            String NombreLocalidad= "";
+            String codUPZ= "";
+            String NombreUPZ= "";
+            String CodBarrio= "";
+            String NombreBarrio= "";
+            String Telefono1= "";
+            String Telefono2= "";
+            String CorreoElectronico= "";
+            String NombrePropietario= "";
+            String TipoDocumentoPropietario= "";
+            String NumeroDocumentoPropietario= "";
+            String NombreRepLegal= "";
+            String TipoDocumentoRepLegal= "";
+            String NumeroDocumentoRepLegal= "";
+            String NumeroMatriculaEstablecimiento= "";
+            String CodTipoEstablecimiento= "";
+            String NombreTipoEstablecimiento= "";
+            String CodCIIU= "";
+            String NombreActividadEconomica= "";
 
             Map<String, String> parameters = new HashMap<>();
 
@@ -79,9 +79,9 @@ public class SendDataToRest {
             Document document = db.parse(input);
             NodeList node = document.getElementsByTagName(requestChildName);
 
-            if (node.getLength() > 1) {
+            if (node.getLength() >= 1) {
                 //childValue = Utils.getCharacterDataFromElement((Element) node.item(0));
-                for (int i = 0; i <= node.getLength(); i++) {
+                for (int i = 0; i < node.getLength(); i++) {
 
                     /*Element element0 = (Element) node.item(i);
                     NodeList line0 = element0.getElementsByTagName("IdSecretaria");
@@ -243,7 +243,7 @@ public class SendDataToRest {
                     NombreActividadEconomica = Utils.getCharacterDataFromElement(tag26);
                     parameters.put("name_economic_activity", NombreActividadEconomica);
 
-                    LOGGER.log(Level.INFO, "Id: {0}, Id: {0}", new Object[]{RazonSocial});
+                    //LOGGER.log(Level.INFO, "Id: {0}, Id: {0}", new Object[]{RazonSocial});
                     RestClient request = new RestClient();
                     request.requestRestServer(SERVER_REST, parameters);
 

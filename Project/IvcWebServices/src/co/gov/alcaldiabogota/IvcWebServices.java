@@ -40,9 +40,7 @@ public class IvcWebServices {
     private static final String SCHEMA_NAMESPACE = "http://ivcWebServices.alcaldiabogota.gov.co/xsd";
     private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
 
-    private OMFactory omFactory = OMAbstractFactory.getOMFactory();
-    private OMDocument doc;
-    private OMFactory m_axiomFactory;
+    private final OMFactory omFactory = OMAbstractFactory.getOMFactory();
 
     /**
      * This method can be used to get values from request parameter
@@ -56,11 +54,11 @@ public class IvcWebServices {
         try {
 
             QName qname = new QName(SCHEMA_NAMESPACE, requestChildName);
-            LOGGER.log(Level.INFO, "Request Child Element: {0}, Q Name: {1}", new Object[]{requestChildName, qname.getLocalPart()});
+            //LOGGER.log(Level.INFO, "Request Child Element: {0}, Q Name: {1}", new Object[]{requestChildName, qname.getLocalPart()});
             OMElement requestChildElement = requestElement.getFirstChildWithName(qname);
 
             return requestChildElement.getText();
-        } catch (Exception ex) {
+        } catch (OMException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
 
@@ -90,6 +88,7 @@ public class IvcWebServices {
 
         String entity_id = getRequestParam(requestElement, "entity_id");
         String table_name = getRequestParam(requestElement, "table_name");
+        String consult_date = getRequestParam(requestElement, "consult_date");
 
         String responseText;
 
@@ -103,16 +102,18 @@ public class IvcWebServices {
                 case "2": // Salud
                     String responseSoap = SoapEntities.clientSoap("2", table_name);
                     String textResponseSoap = SendDataToRest.processDataFromSoap(responseSoap, "Censo");
-                    responseText = "Synchronize in process: " + table_name.toLowerCase() + ". Response: " + textResponseSoap;
-                    LOGGER.log(Level.INFO, "Response: {0}", new Object[]{textResponseSoap});
+                    responseText = "Synchronize in process: " + table_name.toLowerCase() + ".";
+                    LOGGER.log(Level.INFO, "Response Soap: {0}", new Object[]{textResponseSoap.toString()});
                     break;
                 default:
                     responseText = "Error: Web service don't exist";
                     break;
-
             }
-
+                                  
             OMNode response = omFactory.createOMText(responseText);
+            
+            //LOGGER.log(Level.INFO, "Response: {0}", new Object[]{response});
+            
             return createResponse("synchronizeResponse", "return", response);
         } else {
             throw new UnsupportedOperationException("Verify data => Entity: " + entity_id + ", Table: " + table_name);

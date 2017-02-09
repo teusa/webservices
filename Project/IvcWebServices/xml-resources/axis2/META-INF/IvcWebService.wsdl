@@ -11,6 +11,7 @@
                     <xs:sequence>
                         <xs:element name="entity_id" type="xs:int"/>
                         <xs:element name="table_name" type="xs:string"/>
+                        <xs:element name="consult_date" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>

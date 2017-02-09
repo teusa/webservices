@@ -48,10 +48,12 @@ public class IvcWebServicesTest {
         
         String entity_id = "2";
         String table_name = "stablishment";
+        String consult_date = "08-02-2017";
         
         String xml = "<xsd:synchronize xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\">\n"
                 + "         <xsd:entity_id>"+entity_id+"</xsd:entity_id>\n"
                 + "         <xsd:table_name>"+table_name+"</xsd:table_name>\n"
+                + "         <xsd:consult_date>"+consult_date+"</xsd:consult_date>\n"
                 + "      </xsd:synchronize>";
 
         OMElement requestElement = AXIOMUtil.stringToOM(xml);

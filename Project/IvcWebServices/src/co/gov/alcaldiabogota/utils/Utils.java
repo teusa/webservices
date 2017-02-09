@@ -6,8 +6,6 @@
 package co.gov.alcaldiabogota.utils;
 
 import co.gov.alcaldiabogota.IvcWebServices;
-import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +45,7 @@ public class Utils {
         for (Map.Entry<String, String> action : actions.entrySet()) {
 
             if (action.getValue().toLowerCase().equals(tableName.toLowerCase())) {
-                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{action.getKey(), action.getValue()});
+                //LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{action.getKey(), action.getValue()});
                 isEntity = true;
             }
 
@@ -55,7 +53,7 @@ public class Utils {
         for (Map.Entry<String, String> entity : entities.entrySet()) {
             is = false;
             if (entity.getKey().equals(entityId)) {
-                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{entity.getKey(), entity.getValue()});
+                //LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{entity.getKey(), entity.getValue()});
                 isAction = true;
             }
 

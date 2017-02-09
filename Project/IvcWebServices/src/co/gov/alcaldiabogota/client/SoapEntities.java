@@ -63,7 +63,7 @@ public class SoapEntities {
                     break;
             }
 
-            LOGGER.log(Level.INFO, "WSDL: {0}, Service: {1}, Operation: {2}", new Object[]{wsdlURL.getFile(), serviceName.getLocalPart(), operation.getLocalPart()});
+            //LOGGER.log(Level.INFO, "WSDL: {0}, Service: {1}, Operation: {2}", new Object[]{wsdlURL.getFile(), serviceName.getLocalPart(), operation.getLocalPart()});
 
             // Get the request to send the web service of Entity Salud
             StAXOMBuilder builder = new StAXOMBuilder(new ByteArrayInputStream(xml.getBytes()));
@@ -73,8 +73,10 @@ public class SoapEntities {
             ServiceClient wsClient = new ServiceClient(context, wsdlURL, serviceName, portName);
 
             OMElement responsesoap = wsClient.sendReceive(operation, request);
+            
+            wsClient.cleanup();
 
-            LOGGER.log(Level.INFO, "XML from soap: {0}, Response: {1}", new Object[]{xml, responsesoap});
+            //LOGGER.log(Level.INFO, "XML from soap: {0}, Response: {1}", new Object[]{xml, responsesoap});
 
             return responsesoap.toString();
 
