@@ -58,7 +58,7 @@ public class IvcWebServicesTest {
 
         OMElement requestElement = AXIOMUtil.stringToOM(xml);
         IvcWebServices instance = new IvcWebServices();
-        String expResult = "<ns:synchronizeResponse xmlns:ns=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\"><ns:return>Synchronize in process: establishment. Datos no válidos. (Usuario Inválido)</ns:return></ns:synchronizeResponse>";
+        OMElement expResult = AXIOMUtil.stringToOM("<ns:synchronizeResponse xmlns:ns=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\"><ns:return>Synchronize in process: establishment. OK</ns:return></ns:synchronizeResponse>");
         OMElement result = instance.synchronize(requestElement);
         assertEquals(expResult, result);
     }

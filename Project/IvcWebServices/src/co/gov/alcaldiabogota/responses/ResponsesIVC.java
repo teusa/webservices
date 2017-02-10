@@ -81,7 +81,7 @@ public class ResponsesIVC {
     }
 
 
-    public OMElement responseSoapHealth(String entity_id, String table_name, String consult_date, Properties properties) throws XMLStreamException, ParserConfigurationException, MalformedURLException, SAXException, InterruptedException, Exception {
+    public OMElement responseSoapEntities(String entity_id, String table_name, String consult_date, Properties properties) throws XMLStreamException, ParserConfigurationException, MalformedURLException, SAXException, InterruptedException, Exception {
 
         String responseText;
         
@@ -117,5 +117,6 @@ public class ResponsesIVC {
         }
 
     }
+
 
 }

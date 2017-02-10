@@ -37,7 +37,12 @@ public class IvcWebServices {
         
         LOGGER.log(Level.INFO, "Entity: {0}, Table: {1}, Date: {2}, Rest: {3}", new Object[]{entity_id, table_name, consult_date, properties.getProperty("RestApiFront")});
 
-        return ivc.responseSoapHealth(entity_id, table_name, consult_date, properties);
+        return ivc.responseSoapEntities(entity_id, table_name, consult_date, properties);
+    }
+    
+    public void establishment() {
+        
+        
     }
     
 }
