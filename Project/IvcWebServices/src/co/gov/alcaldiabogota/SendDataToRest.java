@@ -249,9 +249,15 @@ public class SendDataToRest {
                     
                     response = request.requestRestServer(SERVER_REST, parameters);
 
-                }
+                } 
+            } else {
+                NodeList node1 = document.getElementsByTagName("DatosServicioResponse");
+                Element element = (Element) node1.item(0);
+                NodeList line = element.getElementsByTagName("TextoError");
+                Element tag = (Element) line.item(0);
+                response = Utils.getCharacterDataFromElement(tag);
+                
             }
-
 
             return response;
         } catch (OMException ex) {

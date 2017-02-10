@@ -83,7 +83,6 @@ public class IvcWebServices {
                     responseText = "Synchronize in process: " + table_name.toLowerCase() + ". Error: Web service don't exist";
                     break;
                 case "2": // Salud
-                    Thread.sleep(500);
                     String responseSoap = SoapEntities.clientSoap("2", table_name, consult_date);
                     String response = SendDataToRest.processDataFromSoap(responseSoap, "Censo");
                     responseText = "Synchronize in process: " + table_name.toLowerCase() + ". " + response;
