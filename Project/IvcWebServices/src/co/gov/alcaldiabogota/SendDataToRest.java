@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.gov.alcaldiabogota;
 
 import co.gov.alcaldiabogota.connection.RestClient;
@@ -36,7 +31,6 @@ public class SendDataToRest {
     public static String processDataFromSoap(String xml, String requestChildName) throws XMLStreamException, ParserConfigurationException, SAXException, IOException {
         try {
 
-            //String childValue;
             //String IdSecretaria;
             //String IdEstablecimientoSDS;
             String RazonSocial;
@@ -68,10 +62,9 @@ public class SendDataToRest {
 
             Map<String, String> parameters = new HashMap<>();
             RestClient request = new RestClient();
-
+            
+            // Replace start tag and end tat to read xml
             String xmlReplace = xml.replace("&lt;", "<").replace("&gt;", ">");
-
-            LOGGER.log(Level.INFO, "XML Replace: {0}", new Object[]{xmlReplace});
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();

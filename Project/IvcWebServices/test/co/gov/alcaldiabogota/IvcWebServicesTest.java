@@ -46,7 +46,7 @@ public class IvcWebServicesTest {
     public void testSynchronize() throws Exception {
         System.out.println("synchronize");
         
-        String entity_id = "4";
+        String entity_id = "5";
         String table_name = "establishment";
         String consult_date = "2016/12/27";
         

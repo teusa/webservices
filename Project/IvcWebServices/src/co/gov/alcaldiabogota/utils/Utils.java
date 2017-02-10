@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.gov.alcaldiabogota.utils;
 
 import co.gov.alcaldiabogota.IvcWebServices;
@@ -45,7 +40,7 @@ public class Utils {
         for (Map.Entry<String, String> action : actions.entrySet()) {
 
             if (action.getValue().toLowerCase().equals(tableName.toLowerCase())) {
-                //LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{action.getKey(), action.getValue()});
+                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{action.getKey(), action.getValue()});
                 isEntity = true;
             }
 
@@ -53,7 +48,7 @@ public class Utils {
         for (Map.Entry<String, String> entity : entities.entrySet()) {
             is = false;
             if (entity.getKey().equals(entityId)) {
-                //LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{entity.getKey(), entity.getValue()});
+                LOGGER.log(Level.INFO, "Key: {0}, Value: {1}", new Object[]{entity.getKey(), entity.getValue()});
                 isAction = true;
             }
 

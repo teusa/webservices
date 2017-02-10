@@ -48,7 +48,7 @@ public class RestClient {
                 wr.flush();
                 
                 StringBuilder headers = viewHeaders(connection);
-                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n", new Object[]{serverRest, headers});                
+                //LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n", new Object[]{serverRest, headers});                
                 
                 if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
@@ -104,10 +104,6 @@ public class RestClient {
         return builder;
     }
     
-    /*private String readBodyAsString(InputStream inputStream, String encoding) throws IOException {
-        return readBody(inputStream).toString(encoding);
-    }
-    */
     private ByteArrayOutputStream readBody(InputStream inputStream) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

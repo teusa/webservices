@@ -3,7 +3,6 @@ package co.gov.alcaldiabogota.client;
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import javax.wsdl.Definition;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import org.apache.axiom.om.OMElement;
@@ -11,7 +10,6 @@ import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ConfigurationContext;
-import org.apache.axis2.context.ConfigurationContextFactory;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -99,7 +97,6 @@ public class SoapEntities {
             // Clean up soap request
             wsClient.cleanup();
 
-            //LOGGER.log(Level.INFO, "XML from soap: {0}, Response: {1}", new Object[]{xml, responsesoap});
             return responsesoap.toString();
 
         } else {
