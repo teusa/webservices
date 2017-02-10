@@ -1,8 +1,9 @@
-package co.gov.alcaldiabogota.client;
+package co.gov.alcaldiabogota.clients;
 
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import org.apache.axiom.om.OMElement;
@@ -21,11 +22,7 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
  */
 public class SoapEntities {
 
-    //private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
-    private static final String SCHEMA_NAMESPACE = "http://tempuri.org/";
-
-
-    public static String clientSoap(String entity_id, String soapObject, String consultDate) throws AxisFault, XMLStreamException, MalformedURLException, InterruptedException, Exception {
+    public static String clientSoap(String entity_id, String soapObject, String consultDate, Properties properties) throws AxisFault, XMLStreamException, MalformedURLException, InterruptedException, Exception {
 
         if (entity_id.equals("2")) {
 
@@ -34,10 +31,10 @@ public class SoapEntities {
              
             // URL Object from JDK
             URL wsdlURL;
-            wsdlURL = new URL("http://dev.saludcapital.gov.co/sivigiladcpruebas/WebServiceVigiaDC.asmx?wsdl");
+            wsdlURL = new URL(properties.getProperty("WsdlURLHealthEntity"));
 
             // Can be null
-            QName serviceName = new QName(SCHEMA_NAMESPACE, "WebServiceVigiaDC");
+            QName serviceName = new QName(properties.getProperty("SchemaHealthEntity"), "WebServiceVigiaDC");
 
             // WSDL PortType
             String portName = "WebServiceVigiaDCSoap12";
@@ -48,12 +45,12 @@ public class SoapEntities {
             switch (soapObject) {
                 case "establishment":
                     // Object to invoke	
-                    operation = new QName(SCHEMA_NAMESPACE, "DatosServicio");
+                    operation = new QName(properties.getProperty("SchemaHealthEntity"), "DatosServicio");
                     // XML Request
                     xml = "<tem:DatosServicio xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:tem=\"http://tempuri.org/\">\n"
                             + "         <tem:Servicio>ServicioCensoEstablecimientosIVC</tem:Servicio>\n"
-                            + "         <tem:Login>pruebasIVC</tem:Login>\n"
-                            + "         <tem:Contraseña>Usu123</tem:Contraseña>\n"
+                            + "         <tem:Login>" + properties.getProperty("LoginSoapHealthEntity") + "</tem:Login>\n"
+                            + "         <tem:Contraseña>" + properties.getProperty("PasswordSoapHealthEntity") + "</tem:Contraseña>\n"
                             + "         <tem:Parametros>\n"
                             + "         <![CDATA[\n"
                             + "            <FECHA>\n"
@@ -77,7 +74,6 @@ public class SoapEntities {
             
             /*
             Solución poderosa, aquí está el poder los hilos
-            Iluminación divina. God Level. Guru.
             9 de febrero 2017 23:26
             Multithread to set context
             */

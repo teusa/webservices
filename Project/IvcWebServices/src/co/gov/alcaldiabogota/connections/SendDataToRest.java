@@ -1,11 +1,12 @@
-package co.gov.alcaldiabogota;
+package co.gov.alcaldiabogota.connections;
 
-import co.gov.alcaldiabogota.connection.RestClient;
+import co.gov.alcaldiabogota.connections.RestClient;
 import co.gov.alcaldiabogota.utils.Utils;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -25,14 +26,13 @@ import org.xml.sax.SAXException;
  */
 public class SendDataToRest {
 
-    private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
-    private static final String SERVER_REST = "http://192.168.88.244/apirest_ivc/backend/web/api/establishment";
+    private final static Logger LOGGER = Logger.getLogger(SendDataToRest.class.getName());
 
-    public static String processDataFromSoap(String xml, String requestChildName) throws XMLStreamException, ParserConfigurationException, SAXException, IOException {
+    public static String processDataFromSoap(String xml, String requestChildName, Properties properties) throws XMLStreamException, ParserConfigurationException, SAXException, IOException {
         try {
 
             //String IdSecretaria;
-            //String IdEstablecimientoSDS;
+            //String IdEstablecimientoSDS;Properties prop = new Properties();
             String RazonSocial;
             String NombreComercial;
             String NITEstablecimiento;
@@ -240,7 +240,7 @@ public class SendDataToRest {
 
                     //LOGGER.log(Level.INFO, "Id: {0}, Id: {0}", new Object[]{RazonSocial});
                     
-                    response = request.requestRestServer(SERVER_REST, parameters);
+                    response = request.requestRestServer(properties.getProperty("RestApiFront"), parameters);
 
                 } 
             } else {
