@@ -1,10 +1,9 @@
 package co.gov.alcaldiabogota.client;
 
-import co.gov.alcaldiabogota.IvcWebServices;
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.net.URL;
+import javax.wsdl.Definition;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 import org.apache.axiom.om.OMElement;
@@ -12,6 +11,11 @@ import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.context.ConfigurationContextFactory;
+import org.apache.axis2.transport.http.HTTPConstants;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 
 /**
  *
@@ -19,18 +23,20 @@ import org.apache.axis2.context.ConfigurationContext;
  */
 public class SoapEntities {
 
-    private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
+    //private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
     private static final String SCHEMA_NAMESPACE = "http://tempuri.org/";
 
-    public static String clientSoap(String entity_id, String soapObject, String consultDate) throws AxisFault, XMLStreamException, MalformedURLException, InterruptedException {
+
+    public static String clientSoap(String entity_id, String soapObject, String consultDate) throws AxisFault, XMLStreamException, MalformedURLException, InterruptedException, Exception {
 
         if (entity_id.equals("2")) {
 
             // Default configuration to Axis2
             ConfigurationContext context = null;
-
-            java.net.URL wsdlURL;
-            wsdlURL = new java.net.URL("http://dev.saludcapital.gov.co/sivigiladcpruebas/WebServiceVigiaDC.asmx?wsdl");
+             
+            // URL Object from JDK
+            URL wsdlURL;
+            wsdlURL = new URL("http://dev.saludcapital.gov.co/sivigiladcpruebas/WebServiceVigiaDC.asmx?wsdl");
 
             // Can be null
             QName serviceName = new QName(SCHEMA_NAMESPACE, "WebServiceVigiaDC");
@@ -53,7 +59,7 @@ public class SoapEntities {
                             + "         <tem:Parametros>\n"
                             + "         <![CDATA[\n"
                             + "            <FECHA>\n"
-                            + "               <Dia>"+consultDate+"</Dia>\n"
+                            + "               <Dia>" + consultDate + "</Dia>\n"
                             + "            </FECHA>\n"
                             + "         ]]>\n"
                             + "         </tem:Parametros>\n"
@@ -64,25 +70,40 @@ public class SoapEntities {
             }
 
             //LOGGER.log(Level.INFO, "WSDL: {0}, Service: {1}, Operation: {2}", new Object[]{wsdlURL.getFile(), serviceName.getLocalPart(), operation.getLocalPart()});
-
             // Get the request to send the web service of Entity Salud
             StAXOMBuilder builder = new StAXOMBuilder(new ByteArrayInputStream(xml.getBytes()));
             OMElement request = builder.getDocumentElement();
 
             // Client call
             ServiceClient wsClient = new ServiceClient(context, wsdlURL, serviceName, portName);
-            
             OMElement responsesoap = wsClient.sendReceive(operation, request);            
             
+            /*
+            Solución poderosa, aquí está el poder los hilos
+            Iluminación divina. God Level. Guru.
+            9 de febrero 2017 23:26
+            Multithread to set context
+            */
+            wsClient.getServiceContext().getConfigurationContext().setProperty(HTTPConstants.REUSE_HTTP_CLIENT, true);
+            MultiThreadedHttpConnectionManager multiThreadedHttpConnectionManager = new MultiThreadedHttpConnectionManager(); 
+            HttpConnectionManagerParams params = new HttpConnectionManagerParams();
+            params.setDefaultMaxConnectionsPerHost(20);
+            params.setMaxTotalConnections(20);
+            params.setSoTimeout(20000);
+            params.setConnectionTimeout(20000);
+            multiThreadedHttpConnectionManager.setParams(params);
+            HttpClient httpClient = new HttpClient(multiThreadedHttpConnectionManager);
+            wsClient.getServiceContext().getConfigurationContext().setProperty(HTTPConstants.REUSE_HTTP_CLIENT, true);
+            wsClient.getServiceContext().getConfigurationContext().setProperty(HTTPConstants.CACHED_HTTP_CLIENT, httpClient);
+
             // Clean up soap request
             wsClient.cleanup();
 
             //LOGGER.log(Level.INFO, "XML from soap: {0}, Response: {1}", new Object[]{xml, responsesoap});
-
             return responsesoap.toString();
 
-        } else {           
-            return  null;            
+        } else {
+            return null;
         }
 
     }
