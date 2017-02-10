@@ -35,7 +35,7 @@ public class IvcWebServices {
         String table_name = ivc.getRequestParam(requestElement, "table_name", properties);
         String consult_date = ivc.getRequestParam(requestElement, "consult_date", properties);
         
-        LOGGER.log(Level.INFO, "Entity: {0}, Table: {1}, Date: {2}, Rest{3}", new Object[]{entity_id, table_name, consult_date, properties.getProperty("RestApiFront")});
+        LOGGER.log(Level.INFO, "Entity: {0}, Table: {1}, Date: {2}, Rest: {3}", new Object[]{entity_id, table_name, consult_date, properties.getProperty("RestApiFront")});
 
         return ivc.responseSoapHealth(entity_id, table_name, consult_date, properties);
     }
