@@ -22,7 +22,7 @@ public class SoapEntities {
     private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
     private static final String SCHEMA_NAMESPACE = "http://tempuri.org/";
 
-    public static String clientSoap(String entity_id, String soapObject) throws AxisFault, XMLStreamException, MalformedURLException {
+    public static String clientSoap(String entity_id, String soapObject, String consultDate) throws AxisFault, XMLStreamException, MalformedURLException, InterruptedException {
 
         if (entity_id.equals("2")) {
 
@@ -42,7 +42,7 @@ public class SoapEntities {
             String xml = null;
 
             switch (soapObject) {
-                case "stablishment":
+                case "establishment":
                     // Object to invoke	
                     operation = new QName(SCHEMA_NAMESPACE, "DatosServicio");
                     // XML Request
@@ -53,7 +53,7 @@ public class SoapEntities {
                             + "         <tem:Parametros>\n"
                             + "         <![CDATA[\n"
                             + "            <FECHA>\n"
-                            + "re               <Dia>2016/12/27</Dia>\n"
+                            + "               <Dia>"+consultDate+"</Dia>\n"
                             + "            </FECHA>\n"
                             + "         ]]>\n"
                             + "         </tem:Parametros>\n"
@@ -71,9 +71,10 @@ public class SoapEntities {
 
             // Client call
             ServiceClient wsClient = new ServiceClient(context, wsdlURL, serviceName, portName);
-
-            OMElement responsesoap = wsClient.sendReceive(operation, request);
             
+            OMElement responsesoap = wsClient.sendReceive(operation, request);            
+            
+            // Clean up soap request
             wsClient.cleanup();
 
             //LOGGER.log(Level.INFO, "XML from soap: {0}, Response: {1}", new Object[]{xml, responsesoap});

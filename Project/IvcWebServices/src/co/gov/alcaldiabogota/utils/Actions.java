@@ -20,7 +20,7 @@ public class Actions {
     public Map Actions() {
     
         Map<String, String> actions = new HashMap<>();
-        actions.put("1", "Stablishment");
+        actions.put("1", "Establishment");
         actions.put("2", "Visit");
         
         return actions;

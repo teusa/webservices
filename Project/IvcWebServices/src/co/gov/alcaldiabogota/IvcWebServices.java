@@ -6,29 +6,12 @@
 package co.gov.alcaldiabogota;
 
 import co.gov.alcaldiabogota.client.SoapEntities;
-import co.gov.alcaldiabogota.connection.RestClient;
 import co.gov.alcaldiabogota.utils.Utils;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.axiom.om.*;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.namespace.QName;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamReader;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -100,10 +83,10 @@ public class IvcWebServices {
                     responseText = "Synchronize in process: " + table_name.toLowerCase() + ". Error: Web service don't exist";
                     break;
                 case "2": // Salud
-                    String responseSoap = SoapEntities.clientSoap("2", table_name);
-                    String textResponseSoap = SendDataToRest.processDataFromSoap(responseSoap, "Censo");
-                    responseText = "Synchronize in process: " + table_name.toLowerCase() + ".";
-                    LOGGER.log(Level.INFO, "Response Soap: {0}", new Object[]{textResponseSoap.toString()});
+                    String responseSoap = SoapEntities.clientSoap("2", table_name, consult_date);
+                    String response = SendDataToRest.processDataFromSoap(responseSoap, "Censo");
+                    responseText = "Synchronize in process: " + table_name.toLowerCase() + ". " + response;
+                    LOGGER.log(Level.INFO, "Response Soap: {0}", new Object[]{responseText});
                     break;
                 default:
                     responseText = "Error: Web service don't exist";

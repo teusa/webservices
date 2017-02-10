@@ -39,33 +39,35 @@ public class SendDataToRest {
             //String childValue;
             //String IdSecretaria;
             //String IdEstablecimientoSDS;
-            String RazonSocial= "";
-            String NombreComercial= "";
-            String NITEstablecimiento= "";
-            String Sede= "";
-            String Direccion= "";
-            String codLocalidad= "";
-            String NombreLocalidad= "";
-            String codUPZ= "";
-            String NombreUPZ= "";
-            String CodBarrio= "";
-            String NombreBarrio= "";
-            String Telefono1= "";
-            String Telefono2= "";
-            String CorreoElectronico= "";
-            String NombrePropietario= "";
-            String TipoDocumentoPropietario= "";
-            String NumeroDocumentoPropietario= "";
-            String NombreRepLegal= "";
-            String TipoDocumentoRepLegal= "";
-            String NumeroDocumentoRepLegal= "";
-            String NumeroMatriculaEstablecimiento= "";
-            String CodTipoEstablecimiento= "";
-            String NombreTipoEstablecimiento= "";
-            String CodCIIU= "";
-            String NombreActividadEconomica= "";
+            String RazonSocial;
+            String NombreComercial;
+            String NITEstablecimiento;
+            String Sede;
+            String Direccion;
+            String codLocalidad;
+            String NombreLocalidad;
+            String codUPZ;
+            String NombreUPZ;
+            String CodBarrio;
+            String NombreBarrio;
+            String Telefono1;
+            String Telefono2;
+            String CorreoElectronico;
+            String NombrePropietario;
+            String TipoDocumentoPropietario;
+            String NumeroDocumentoPropietario;
+            String NombreRepLegal;
+            String TipoDocumentoRepLegal;
+            String NumeroDocumentoRepLegal;
+            String NumeroMatriculaEstablecimiento;
+            String CodTipoEstablecimiento;
+            String NombreTipoEstablecimiento;
+            String CodCIIU;
+            String NombreActividadEconomica;
+            String response = null;
 
             Map<String, String> parameters = new HashMap<>();
+            RestClient request = new RestClient();
 
             String xmlReplace = xml.replace("&lt;", "<").replace("&gt;", ">");
 
@@ -244,14 +246,14 @@ public class SendDataToRest {
                     parameters.put("name_economic_activity", NombreActividadEconomica);
 
                     //LOGGER.log(Level.INFO, "Id: {0}, Id: {0}", new Object[]{RazonSocial});
-                    RestClient request = new RestClient();
-                    request.requestRestServer(SERVER_REST, parameters);
+                    
+                    response = request.requestRestServer(SERVER_REST, parameters);
 
                 }
             }
 
 
-            return node.toString();
+            return response;
         } catch (OMException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
