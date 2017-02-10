@@ -37,13 +37,13 @@ public class ResponsesIVC {
     public ResponsesIVC() {
     }
     
-    
     /**
      * This method can be used to get values from request parameter
      *
      * @param requestElement top level element from request body, e.g.
-     * "getPrice" element)
+     * "getParam" element)
      * @param requestChildName request child element name, e.g. "symbol"
+     * @param properties
      * @return request parameter value
      */
     public String getRequestParam(OMElement requestElement, String requestChildName, Properties properties) {
@@ -65,10 +65,11 @@ public class ResponsesIVC {
      * This method can be used to generate response
      *
      * @param responseElementName element name for top level response element,
-     * e.g. "getPriceResponse"
+     * e.g. "createResponse"
      * @param responseChildName response element name, e.g. "return"
      * @param response OMNode representing a response (use omFactory to create
      * the OMNode object)
+     * @param properties
      * @return request parameter value
      */
     public OMElement createResponse(String responseElementName, String responseChildName, OMNode response, Properties properties) {
@@ -80,7 +81,20 @@ public class ResponsesIVC {
         return responseElement;
     }
 
-
+    /**
+     * This method can be used to generate response
+     *
+     * @param entity_id
+     * @param table_name
+     * @param properties
+     * @param consult_date
+     * @return response of each soap server
+     * @throws javax.xml.stream.XMLStreamException
+     * @throws javax.xml.parsers.ParserConfigurationException
+     * @throws java.net.MalformedURLException
+     * @throws org.xml.sax.SAXException
+     * @throws java.lang.InterruptedException
+     */
     public OMElement responseSoapEntities(String entity_id, String table_name, String consult_date, Properties properties) throws XMLStreamException, ParserConfigurationException, MalformedURLException, SAXException, InterruptedException, Exception {
 
         String responseText;

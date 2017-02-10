@@ -28,6 +28,17 @@ public class SendDataToRest {
 
     private final static Logger LOGGER = Logger.getLogger(SendDataToRest.class.getName());
 
+    /**
+     * 
+     * @param xml
+     * @param requestChildName
+     * @param properties
+     * @return response from Rest Server in PHP Front End
+     * @throws XMLStreamException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException 
+     */
     public static String processDataFromSoap(String xml, String requestChildName, Properties properties) throws XMLStreamException, ParserConfigurationException, SAXException, IOException {
         try {
 

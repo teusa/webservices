@@ -26,7 +26,13 @@ public class RestClient {
 
     public RestClient() {
     }
-
+    
+    /**
+     * 
+     * @param serverRest
+     * @param parameters
+     * @return response from connection server
+     */
     public String requestRestServer(String serverRest, Map<String, String> parameters) {
         try {
 
@@ -73,6 +79,13 @@ public class RestClient {
         }
     }
     
+    
+    /**
+     * 
+     * @param connection
+     * @return
+     * @throws IOException 
+     */
     private StringBuilder viewHeaders(HttpURLConnection connection) throws IOException {        
         StringBuilder builder = new StringBuilder();        
         builder.append(connection.getResponseCode())
@@ -104,6 +117,11 @@ public class RestClient {
         return builder;
     }
     
+    /**
+     * 
+     * @param inputStream
+     * @return 
+     */
     private ByteArrayOutputStream readBody(InputStream inputStream) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

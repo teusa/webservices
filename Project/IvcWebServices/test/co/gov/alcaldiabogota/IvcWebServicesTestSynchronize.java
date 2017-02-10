@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.gov.alcaldiabogota;
 
 import org.apache.axiom.om.OMElement;
@@ -18,9 +13,9 @@ import static org.junit.Assert.*;
  *
  * @author jesusrodriguezmiranda
  */
-public class IvcWebServicesTest {
+public class IvcWebServicesTestSynchronize {
 
-    public IvcWebServicesTest() {
+    public IvcWebServicesTestSynchronize() {
     }
 
     @BeforeClass
@@ -50,7 +45,6 @@ public class IvcWebServicesTest {
         String entity_id = "2";
         String table_name = "establishment";
         String consult_date = "2015/09/28";
-
         String xml = "<xsd:synchronize xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\">\n"
                 + "         <xsd:entity_id>" + entity_id + "</xsd:entity_id>\n"
                 + "         <xsd:table_name>" + table_name + "</xsd:table_name>\n"
@@ -64,5 +58,5 @@ public class IvcWebServicesTest {
         //assertEquals(expResult, result);
         assertNotNull(result);
     }
-
+   
 }
