@@ -92,10 +92,12 @@ public class IvcWebServices {
                     responseText = "Error: Web service don't exist";
                     break;
             }
-                                  
-            OMNode response = omFactory.createOMText(responseText);
-            
-            //LOGGER.log(Level.INFO, "Response: {0}", new Object[]{response});
+            OMNode response;
+            if (!"Error: Web service don't exist".equals(responseText)) {
+                response = omFactory.createOMText(responseText);
+            } else {
+                throw new UnsupportedOperationException(responseText);
+            }
             
             return createResponse("synchronizeResponse", "return", response);
         } else {

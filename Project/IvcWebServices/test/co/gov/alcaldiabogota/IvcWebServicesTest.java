@@ -46,7 +46,7 @@ public class IvcWebServicesTest {
     public void testSynchronize() throws Exception {
         System.out.println("synchronize");
         
-        String entity_id = "2";
+        String entity_id = "4";
         String table_name = "establishment";
         String consult_date = "2016/12/27";
         
@@ -58,7 +58,7 @@ public class IvcWebServicesTest {
 
         OMElement requestElement = AXIOMUtil.stringToOM(xml);
         IvcWebServices instance = new IvcWebServices();
-        String expResult = "";
+        String expResult = "<ns:synchronizeResponse xmlns:ns=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\"><ns:return>Synchronize in process: establishment. Datos no válidos. (Usuario Inválido)</ns:return></ns:synchronizeResponse>";
         OMElement result = instance.synchronize(requestElement);
         assertEquals(expResult, result);
     }
