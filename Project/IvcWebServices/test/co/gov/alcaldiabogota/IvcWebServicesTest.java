@@ -46,9 +46,9 @@ public class IvcWebServicesTest {
     public void testSynchronize() throws Exception {
         System.out.println("synchronize");
         
-        String entity_id = "5";
+        String entity_id = "2";
         String table_name = "establishment";
-        String consult_date = "2016/12/27";
+        String consult_date = "2015/09/28";
         
         String xml = "<xsd:synchronize xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://ivcWebServices.alcaldiabogota.gov.co/xsd\">\n"
                 + "         <xsd:entity_id>"+entity_id+"</xsd:entity_id>\n"

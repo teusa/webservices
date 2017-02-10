@@ -66,8 +66,7 @@ public class SoapEntities {
                 default:
                     break;
             }
-
-            //LOGGER.log(Level.INFO, "WSDL: {0}, Service: {1}, Operation: {2}", new Object[]{wsdlURL.getFile(), serviceName.getLocalPart(), operation.getLocalPart()});
+            
             // Get the request to send the web service of Entity Salud
             StAXOMBuilder builder = new StAXOMBuilder(new ByteArrayInputStream(xml.getBytes()));
             OMElement request = builder.getDocumentElement();

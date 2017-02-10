@@ -73,7 +73,6 @@ public class IvcWebServices {
         if (Utils.isTableName(entity_id, table_name)) {
 
             switch (entity_id) {
-
                 case "1": //Ambiente
                     responseText = "Synchronize in process: " + table_name.toLowerCase() + ". Error: Web service don't exist";
                     break;
@@ -87,7 +86,9 @@ public class IvcWebServices {
                     responseText = "Error: Web service don't exist";
                     break;
             }
+            
             OMNode response;
+            
             if (!"Error: Web service don't exist".equals(responseText)) {
                 response = omFactory.createOMText(responseText);
             } else {

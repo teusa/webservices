@@ -244,11 +244,15 @@ public class SendDataToRest {
 
                 } 
             } else {
-                NodeList node1 = document.getElementsByTagName("DatosServicioResponse");
-                Element element = (Element) node1.item(0);
-                NodeList line = element.getElementsByTagName("TextoError");
-                Element tag = (Element) line.item(0);
-                response = Utils.getCharacterDataFromElement(tag);
+                
+                NodeList node0 = document.getElementsByTagName("DatosServicioResponse");
+                Element element1 = (Element) node0.item(0);
+                NodeList line1 = element1.getElementsByTagName("TextoError");
+                Element tag1 = (Element) line1.item(0);
+                NodeList line2 = element1.getElementsByTagName("CodError");
+                Element tag2 = (Element) line2.item(0);
+                
+                response = Utils.getCharacterDataFromElement(tag1) + ". Cod: " + Utils.getCharacterDataFromElement(tag2);
                 
             }
 
