@@ -248,8 +248,6 @@ public class SendDataToRest {
                     Element tag26 = (Element) line26.item(0);
                     NombreActividadEconomica = Utils.getCharacterDataFromElement(tag26);
                     parameters.put("name_economic_activity", NombreActividadEconomica);
-
-                    //LOGGER.log(Level.INFO, "Id: {0}, Id: {0}", new Object[]{RazonSocial});
                     
                     response = request.requestRestServer(properties.getProperty("RestApiFront"), parameters);
 
