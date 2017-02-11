@@ -21,17 +21,17 @@ public class IvcWebServices {
     private final static Logger LOGGER = Logger.getLogger(IvcWebServices.class.getName());
     private final OMFactory omFactory = OMAbstractFactory.getOMFactory();
     Properties properties = new Properties();
+    PropertiesFile propertiesFile = new PropertiesFile();
     ResponsesIVC ivc = new ResponsesIVC();
     InputStream input = null;
 
-    public IvcWebServices() throws FileNotFoundException, IOException {
-        String tempDir = System.getProperty("java.io.tmpdir");
-        String propertiesFile = tempDir + "/config.properties";
-        input = new FileInputStream(propertiesFile);
+    public IvcWebServices() throws FileNotFoundException, IOException, Exception {        
+        input = new FileInputStream(propertiesFile.propertiesFile);
         properties.load(input);
     }
     
     /**
+     * This method to synchronize and connect soap client from the entities
      * 
      * @param requestElement
      * @return 
@@ -50,6 +50,7 @@ public class IvcWebServices {
     }
     
     /**
+     * This method to build establishment object and connect to rest in Yii
      * 
      * @param requestElement
      * @return

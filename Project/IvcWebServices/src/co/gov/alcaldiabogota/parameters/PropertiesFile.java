@@ -5,27 +5,13 @@
  */
 package co.gov.alcaldiabogota.parameters;
 
-import com.sun.corba.se.impl.orbutil.GetPropertyAction;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.nio.file.attribute.FileAttribute;
-import static java.security.AccessController.doPrivileged;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -35,8 +21,8 @@ public final class PropertiesFile {
 
     private final static Logger LOGGER = Logger.getLogger(PropertiesFile.class.getName());
     
-    String tempDir = System.getProperty("java.io.tmpdir");
-    String propertiesFile = tempDir + "/config.properties";
+    public final String tempDir = System.getProperty("java.io.tmpdir");
+    public final String propertiesFile = tempDir + "/config.properties";
 
     public PropertiesFile() throws IOException {
         this.ifExistPropertiesFile();
@@ -44,7 +30,7 @@ public final class PropertiesFile {
 
     public void ifExistPropertiesFile() throws IOException {
         
-        LOGGER.log(Level.INFO, "Temp: {0}", System.getProperty("java.io.tmpdir"));
+        LOGGER.log(Level.INFO, "Temp: {0}", tempDir);
         
         File file = new File(propertiesFile);
         if(!file.exists() && !file.isDirectory()) { 
@@ -52,12 +38,9 @@ public final class PropertiesFile {
             this.createPropertiesFile();
         } else {            
             LOGGER.log(Level.INFO, "Path: {0}", file.lastModified());
-        }
-        
-        /*if (!file.isFile()) {
-            LOGGER.log(Level.INFO, "INPUT: ");
             this.createPropertiesFile();
-        }*/
+        }
+       
     }
 
     public void createPropertiesFile() {
