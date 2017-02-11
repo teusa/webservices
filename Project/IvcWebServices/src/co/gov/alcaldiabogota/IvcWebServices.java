@@ -25,9 +25,9 @@ public class IvcWebServices {
     InputStream input = null;
 
     public IvcWebServices() throws FileNotFoundException, IOException {
-        PropertiesFile propFile = new PropertiesFile();
-        propFile.toString();
-        input = new FileInputStream("config.properties");
+        String tempDir = System.getProperty("java.io.tmpdir");
+        String propertiesFile = tempDir + "/config.properties";
+        input = new FileInputStream(propertiesFile);
         properties.load(input);
     }
     
@@ -39,8 +39,6 @@ public class IvcWebServices {
      * @throws Exception 
      */
     public OMElement synchronize(OMElement requestElement) throws XMLStreamException, Exception {
-
-        
 
         String entity_id = ivc.getRequestParam(requestElement, "entity_id", properties);
         String table_name = ivc.getRequestParam(requestElement, "table_name", properties);

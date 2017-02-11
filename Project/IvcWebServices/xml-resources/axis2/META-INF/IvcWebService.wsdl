@@ -21,7 +21,56 @@
                         <xs:element name="return" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
-            </xs:element>            
+            </xs:element>
+            <xs:element name="establishment">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="upz" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="lastname_owner" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="lastname_legal_representative" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="ciiu1" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="ciiu2" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="ciiu3" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="address_commercial" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="address_standard" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="address_notification" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="stablishment_id" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="date_end_commercial_registration" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="date_commercial_registration" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="formal" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="digit_verification_establishment" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="digit_verification_owner" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="digit_verification_legal_representative" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="locality" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="commercial_registration" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="commercial_registration_owner" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="city" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="number_identification_establishment" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="number_identification_owner" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="number_identificacion_legal_representative" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="name_commercial" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="name_owner" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="name_legal_representative" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="observation" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="observation_history" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="page_web" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="business_name" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="type_history" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="type_identification_establishment" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="type_identification_owner" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="type_identification_legal_representative" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="establishmentResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>     
         </xs:schema>
     </wsdl:types>
     
@@ -32,10 +81,22 @@
         <wsdl:part name="parameters" element="ns:synchronizeResponse"/>
     </wsdl:message>
 
+    <wsdl:message name="establishmentRequest">
+        <wsdl:part name="parameters" element="ns:establishment"/>
+    </wsdl:message>
+    <wsdl:message name="establishmentResponse">
+        <wsdl:part name="parameters" element="ns:establishmentResponse"/>
+    </wsdl:message>    
+
+
     <wsdl:portType name="IvcWebServicesPortType">        
         <wsdl:operation name="synchronize">
             <wsdl:input message="tns:synchronizeRequest" wsaw:Action="urn:synchronize"/>
             <wsdl:output message="tns:synchronizeResponse" wsaw:Action="urn:synchronizeResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="establishment">
+            <wsdl:input message="tns:establishmentRequest" wsaw:Action="urn:establishment"/>
+            <wsdl:output message="tns:establishmentResponse" wsaw:Action="urn:establishmentResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
@@ -43,6 +104,15 @@
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>        
         <wsdl:operation name="synchronize">
             <soap:operation soapAction="urn:synchronize" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="establishment">
+            <soap:operation soapAction="urn:establishment" style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -62,11 +132,29 @@
                 <soap12:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="establishment">
+            <soap12:operation soapAction="urn:establishment" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:binding name="IvcWebServicesHttpBinding" type="tns:IvcWebServicesPortType">
         <http:binding verb="POST"/>        
         <wsdl:operation name="synchronize">
             <http:operation location="synchronize"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="establishment">
+            <http:operation location="establishment"/>
             <wsdl:input>
                 <mime:content type="application/xml" part="parameters"/>
             </wsdl:input>
