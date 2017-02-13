@@ -1,6 +1,8 @@
 package co.gov.alcaldiabogota;
 
+import co.gov.alcaldiabogota.connections.RestClient;
 import co.gov.alcaldiabogota.parameters.PropertiesFile;
+import co.gov.alcaldiabogota.parameters.Stablishment;
 import co.gov.alcaldiabogota.responses.ResponsesIVC;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -58,7 +60,12 @@ public class IvcWebServices {
      */
     public OMElement establishment(OMElement requestElement) throws XMLStreamException {
         
-        OMNode response = omFactory.createOMText("response text");
+        Stablishment parametersStablishment = new Stablishment();
+        
+        RestClient request = new RestClient();            
+        String responseRequest = request.requestRestServer(properties.getProperty("RestApiFront"), parametersStablishment.setStablishmentParameters(requestElement, ivc, properties));
+        
+        OMNode response = omFactory.createOMText(responseRequest.toString());  
         return ivc.createResponse("establishmentResponse", "return", response, properties);
     }
 

@@ -5,7 +5,6 @@
  */
 package co.gov.alcaldiabogota.responses;
 
-import co.gov.alcaldiabogota.IvcWebServices;
 import co.gov.alcaldiabogota.clients.SoapEntities;
 import co.gov.alcaldiabogota.connections.SendDataToRest;
 import co.gov.alcaldiabogota.utils.Utils;
@@ -30,7 +29,6 @@ import org.xml.sax.SAXException;
  */
 public class ResponsesIVC {
     
-    //private static final String SCHEMA_NAMESPACE = "http://ivcWebServices.alcaldiabogota.gov.co/xsd";
     private final OMFactory omFactory = OMAbstractFactory.getOMFactory();
     private final static Logger LOGGER = Logger.getLogger(ResponsesIVC.class.getName());
 
