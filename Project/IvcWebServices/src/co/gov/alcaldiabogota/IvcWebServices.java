@@ -52,7 +52,7 @@ public class IvcWebServices {
     }
     
     /**
-     * This method to build establishment object and connect to rest in Yii
+     * This method to build establishment object and connect to REST Server in Yii
      * 
      * @param requestElement
      * @return
@@ -65,7 +65,7 @@ public class IvcWebServices {
         RestClient request = new RestClient();            
         String responseRequest = request.requestRestServer(properties.getProperty("RestApiFront"), parametersStablishment.setStablishmentParameters(requestElement, ivc, properties));
         
-        OMNode response = omFactory.createOMText(responseRequest.toString());  
+        OMNode response = omFactory.createOMText(responseRequest);  
         return ivc.createResponse("establishmentResponse", "return", response, properties);
     }
 
