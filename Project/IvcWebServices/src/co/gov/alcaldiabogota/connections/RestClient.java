@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -26,73 +28,81 @@ public class RestClient {
 
     public RestClient() {
     }
-    
+
     /**
-     * 
+     *
      * @param serverRest
      * @param parameters
      * @return response from connection server
      */
     public String requestRestServer(String serverRest, Map<String, String> parameters) {
         try {
-
-            Optional paramOptional = Optional.ofNullable(parameters);
-
-            if (paramOptional.isPresent()) {
-
+            if (Optional.ofNullable(parameters).isPresent()) {
                 URL url = new URL(serverRest);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
                 connection.setDoOutput(true);
-                OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
-
-                for (Map.Entry<String, String> parameter : parameters.entrySet()) {
-                    //LOGGER.log(Level.INFO, "JSON: {0}\n", new Object[]{URLEncoder.encode(parameter.getKey(), "UTF-8") + "=" + URLEncoder.encode(parameter.getValue(), "UTF-8")});
-                    wr.write(URLEncoder.encode(parameter.getKey(), "UTF-8") + "=" + URLEncoder.encode(parameter.getValue(), "UTF-8"));
-                    wr.write("&");
-                }
-                wr.flush();
-                
-                StringBuilder headers = viewHeaders(connection);
-                LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n", new Object[]{serverRest, headers});                
-                
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                        String line = reader.readLine();
-                        while (line != null) {
-                            line = reader.readLine();
-                        }
-                    }
-                }
-                
+                this.streamWriter(connection.getOutputStream(), parameters);
+                this.responseCode(connection, connection.getResponseCode(), connection.getInputStream(), serverRest);
                 connection.disconnect();
-
                 return connection.getResponseMessage();
-
             } else {
                 return "No object establishment defined";
             }
-
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return "Error";
         }
     }
-    
+
+    /**
+     * Writer to connection
+     *
+     * @param outputStream
+     * @param parameters
+     */
+    private void streamWriter(OutputStream outputStream, Map<String, String> parameters) throws UnsupportedEncodingException, IOException {
+        OutputStreamWriter wr = new OutputStreamWriter(outputStream);
+        for (Map.Entry<String, String> parameter : parameters.entrySet()) {
+            wr.write(URLEncoder.encode(parameter.getKey(), "UTF-8") + "=" + URLEncoder.encode(parameter.getValue(), "UTF-8"));
+            wr.write("&");
+        }
+        wr.flush();
+    }
     
     /**
      * 
      * @param connection
-     * @return
+     * @param responseCode
+     * @param inputStream
+     * @param serverRest
      * @throws IOException 
      */
-    private StringBuilder viewHeaders(HttpURLConnection connection) throws IOException {        
-        StringBuilder builder = new StringBuilder();        
+    private void responseCode(HttpURLConnection connection, int responseCode, InputStream inputStream, String serverRest) throws IOException {
+        StringBuilder headers = this.viewHeaders(connection);
+        LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n", new Object[]{serverRest, headers});
+        if ( responseCode == HttpURLConnection.HTTP_OK) {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                String line = reader.readLine();
+                while (line != null) {
+                    line = reader.readLine();
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param connection
+     * @return
+     * @throws IOException
+     */
+    private StringBuilder viewHeaders(HttpURLConnection connection) throws IOException {
+        StringBuilder builder = new StringBuilder();
         builder.append(connection.getResponseCode())
                 .append(" ")
                 .append(connection.getResponseMessage())
                 .append("\n");
-        Map<String, List<String>> map = connection.getHeaderFields();        
+        Map<String, List<String>> map = connection.getHeaderFields();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             if (entry.getKey() == null) {
                 continue;
@@ -103,7 +113,6 @@ public class RestClient {
             Iterator<String> it = headerValues.iterator();
             if (it.hasNext()) {
                 builder.append(it.next());
-
                 while (it.hasNext()) {
                     builder.append(", ")
                             .append(it.next());
@@ -113,14 +122,14 @@ public class RestClient {
         }
 
         builder.append(readBody(connection.getInputStream()).toString("UTF-8"));
-        
+
         return builder;
     }
-    
+
     /**
-     * 
+     *
      * @param inputStream
-     * @return 
+     * @return
      */
     private ByteArrayOutputStream readBody(InputStream inputStream) {
         try {

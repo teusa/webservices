@@ -31,10 +31,13 @@ public class ResponsesIVC {
     
     private final OMFactory omFactory = OMAbstractFactory.getOMFactory();
     private final static Logger LOGGER = Logger.getLogger(ResponsesIVC.class.getName());
-
+    
+    private String responseText;
+    private OMNode response;
+    
     public ResponsesIVC() {
     }
-    
+
     /**
      * This method can be used to get values from request parameter
      *
@@ -45,17 +48,13 @@ public class ResponsesIVC {
      * @return request parameter value
      */
     public String getRequestParam(OMElement requestElement, String requestChildName, Properties properties) {
-        try {
-
+        try {            
             QName qname = new QName(properties.getProperty("SchemaIVC"), requestChildName);
-            //LOGGER.log(Level.INFO, "Request Child Element: {0}, Q Name: {1}", new Object[]{requestChildName, qname.getLocalPart()});
-            OMElement requestChildElement = requestElement.getFirstChildWithName(qname);
-
+            OMElement requestChildElement = requestElement.getFirstChildWithName(qname);            
             return requestChildElement.getText();
         } catch (OMException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
-        }
-
+        }        
         return "Null Value";
     }
 
@@ -87,48 +86,41 @@ public class ResponsesIVC {
      * @param properties
      * @param consult_date
      * @return response of each soap server
-     * @throws javax.xml.stream.XMLStreamException
+     * @throws javax.xml.stream.XMLStreamExceptionresponse
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws java.net.MalformedURLException
      * @throws org.xml.sax.SAXException
      * @throws java.lang.InterruptedException
      */
     public OMElement responseSoapEntities(String entity_id, String table_name, String consult_date, Properties properties) throws XMLStreamException, ParserConfigurationException, MalformedURLException, SAXException, InterruptedException, Exception {
-
-        String responseText;
-        
-
         if (Utils.isTableName(entity_id, table_name)) {
-
-            switch (entity_id) {
-                case "1": //Ambiente
-                    responseText = "Synchronize in process: " + table_name.toLowerCase() + ". Error: Web service don't exist";
-                    break;
-                case "2": // Salud
-                    String responseSoap = SoapEntities.clientSoap("2", table_name, consult_date, properties);
-                    String response = SendDataToRest.processDataFromSoap(responseSoap, "Censo", properties);
-                    responseText = "Synchronize in process: " + table_name.toLowerCase() + ". " + response;
-                    LOGGER.log(Level.INFO, "Response Soap: {0}", new Object[]{responseText});
-                    break;
-                default:
-                    responseText = "Error: Web service don't exist";
-                    break;
-            }
-
-            OMNode response;
-
-            if (!"Error: Web service don't exist".equals(responseText)) {
-                response = omFactory.createOMText(responseText);
+            this.switchSoapEntities(entity_id, table_name, consult_date, properties);
+            if (!"Error: Web service don't exist".equals(this.responseText)) {
+                this.response = omFactory.createOMText(this.responseText);
             } else {
-                throw new UnsupportedOperationException(responseText);
+                throw new UnsupportedOperationException(this.responseText);
             }
-
-            return createResponse("synchronizeResponse", "return", response, properties);
+            return createResponse("synchronizeResponse", "return", this.response, properties);
         } else {
             throw new UnsupportedOperationException("Verify data => Entity: " + entity_id + ", Table: " + table_name);
         }
-
     }
-
-
+    
+    private String switchSoapEntities(String entity_id, String table_name, String consult_date, Properties properties) throws XMLStreamException, MalformedURLException, InterruptedException, Exception {   
+        switch (entity_id) {
+            case "1": //Ambiente
+                responseText = "Synchronize in process: " + table_name.toLowerCase() + ". Error: Web service don't exist";
+                break;
+            case "2": // Salud
+                String responseSoap = SoapEntities.clientSoap("2", table_name, consult_date, properties);
+                String response = SendDataToRest.processDataFromSoap(responseSoap, "Censo", properties);
+                responseText = "Synchronize in process: " + table_name.toLowerCase() + ". " + response;
+                LOGGER.log(Level.INFO, "Response Soap: {0}", new Object[]{responseText});
+                break;
+            default:
+                responseText = "Error: Web service don't exist";
+                break;
+        }
+        return responseText;
+    }
 }

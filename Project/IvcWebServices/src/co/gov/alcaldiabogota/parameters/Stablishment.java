@@ -5,10 +5,7 @@ package co.gov.alcaldiabogota.parameters;
 import co.gov.alcaldiabogota.responses.ResponsesIVC;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.axiom.om.OMElement;
 
 /**
@@ -16,8 +13,6 @@ import org.apache.axiom.om.OMElement;
  * @author jesusrodriguezmiranda
  */
 public final class Stablishment {
-
-    private final static Logger LOGGER = Logger.getLogger(Stablishment.class.getName());
 
     public Stablishment() {
     }
@@ -30,9 +25,8 @@ public final class Stablishment {
 
         Map<String, String> parameters = new HashMap<>();
 
-        if (requestElement != null) {
-            
-            // List of parameters to object Stablishment        
+        if (requestElement != null) {            
+            // List of parameters to object Stablishment
             parameters.put("upz", ivc.getRequestParam(requestElement, "upz", properties));
             parameters.put("lastname_owner", ivc.getRequestParam(requestElement, "lastname_owner", properties));
             parameters.put("lastname_legal_representative",  ivc.getRequestParam(requestElement, "lastname_legal_representative", properties));
@@ -67,14 +61,11 @@ public final class Stablishment {
             parameters.put("type_identification_establishment",  ivc.getRequestParam(requestElement, "type_identification_establishment", properties));
             parameters.put("type_identification_owner", ivc.getRequestParam(requestElement, "type_identification_owner", properties));
             parameters.put("type_identification_legal_representative", ivc.getRequestParam(requestElement, "type_identification_legal_representative", properties));
-
         } else {
             parameters = null;
             
         }
-
         return parameters;
-
     }
 
 }
