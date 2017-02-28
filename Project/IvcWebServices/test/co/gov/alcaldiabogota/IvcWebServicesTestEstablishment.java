@@ -63,7 +63,7 @@ public class IvcWebServicesTestEstablishment {
 "         <xsd:digit_verification_legal_representative>?</xsd:digit_verification_legal_representative>\n" +
 "         <xsd:locality>?</xsd:locality>\n" +
 "         <xsd:email>?</xsd:email>\n" +
-"         <xsd:commercial_registration>9004835710</xsd:commercial_registration>\n" +
+"         <xsd:commercial_registration>1234567890-1</xsd:commercial_registration>\n" +
 "         <xsd:commercial_registration_owner>?</xsd:commercial_registration_owner>\n" +
 "         <xsd:city>?</xsd:city>\n" +
 "         <xsd:number_identification_establishment>?</xsd:number_identification_establishment>\n" +
@@ -75,7 +75,7 @@ public class IvcWebServicesTestEstablishment {
 "         <xsd:observation>?</xsd:observation>\n" +
 "         <xsd:observation_history>?</xsd:observation_history>\n" +
 "         <xsd:page_web>?</xsd:page_web>\n" +
-"         <xsd:business_name>Test from SOAP 11 - 001</xsd:business_name>\n" +
+"         <xsd:business_name>Test from SOAP 11 - 004</xsd:business_name>\n" +
 "         <xsd:phone>?</xsd:phone>\n" +
 "         <xsd:type_history>?</xsd:type_history>\n" +
 "         <xsd:type_identification_establishment>?</xsd:type_identification_establishment>\n" +

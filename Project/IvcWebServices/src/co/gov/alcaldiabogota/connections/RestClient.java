@@ -35,18 +35,26 @@ public class RestClient {
      * @param parameters
      * @return response from connection server
      */
-    public String requestRestServer(String serverRest, Map<String, String> parameters) {
+    public String requestRestServer(String serverRest, Map<String, String> parameters) throws IOException {
         try {
             if (Optional.ofNullable(parameters).isPresent()) {
                 URL url = new URL(serverRest);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
                 this.streamWriter(connection.getOutputStream(), parameters);
-                this.responseCode(connection, connection.getResponseCode(), connection.getInputStream(), serverRest);
+                this.bufferRead(connection, connection.getResponseCode(), connection.getInputStream(), serverRest);
                 connection.disconnect();
                 return connection.getResponseMessage();
             } else {
-                return "No object establishment defined";
+                URL url = new URL(serverRest);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoOutput(true);
+                StringBuilder builder = new StringBuilder();
+                builder.append(readBody(connection.getInputStream()).toString("UTF-8"));
+                //LOGGER.log(Level.INFO, "Builder: {0}", new Object[]{builder});
+                return builder.toString();
             }
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -68,19 +76,19 @@ public class RestClient {
         }
         wr.flush();
     }
-    
+
     /**
-     * 
+     *.toString()
      * @param connection
      * @param responseCode
      * @param inputStream
      * @param serverRest
-     * @throws IOException 
+     * @throws IOException
      */
-    private void responseCode(HttpURLConnection connection, int responseCode, InputStream inputStream, String serverRest) throws IOException {
+    private void bufferRead(HttpURLConnection connection, int responseCode, InputStream inputStream, String serverRest) throws IOException {
         StringBuilder headers = this.viewHeaders(connection);
         LOGGER.log(Level.INFO, "URL: {0}\n Headers: {1}\n", new Object[]{serverRest, headers});
-        if ( responseCode == HttpURLConnection.HTTP_OK) {
+        if (responseCode == HttpURLConnection.HTTP_OK) {
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 String line = reader.readLine();
                 while (line != null) {
@@ -120,9 +128,7 @@ public class RestClient {
             }
             builder.append("\n");
         }
-
         builder.append(readBody(connection.getInputStream()).toString("UTF-8"));
-
         return builder;
     }
 

@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,8 @@ public class IvcWebServices {
     Properties properties = new Properties();
     PropertiesFile propertiesFile = new PropertiesFile();
     ResponsesIVC ivc = new ResponsesIVC();
+    Stablishment parametersStablishment = new Stablishment();        
+    RestClient request = new RestClient();
     InputStream input = null;
 
     public IvcWebServices() throws FileNotFoundException, IOException, Exception {        
@@ -55,12 +58,21 @@ public class IvcWebServices {
      * @return
      * @throws XMLStreamException 
      */
-    public OMElement establishment(OMElement requestElement) throws XMLStreamException {        
-        Stablishment parametersStablishment = new Stablishment();        
-        RestClient request = new RestClient();            
+    public OMElement establishment(OMElement requestElement) throws XMLStreamException, IOException {        
         String responseRequest = request.requestRestServer(properties.getProperty("RestApiFront"), parametersStablishment.setStablishmentParameters(requestElement, ivc, properties));        
         OMNode response = omFactory.createOMText(responseRequest);  
         return ivc.createResponse("establishmentResponse", "return", response, properties);
+    }
+    
+    
+    public OMElement update( OMElement requestElement) throws IOException {        
+        String batch = ivc.getRequestParam(requestElement, "batch", properties);
+        Map<String, String> parameters= null;
+        String restURL = properties.getProperty("RestApiFront") + "?batch="+batch;        
+        String responseRequest = request.requestRestServer(restURL, parameters);
+        LOGGER.log(Level.INFO, "URL: {0}, Response: {1}", new Object[]{restURL, responseRequest});
+        OMNode response = omFactory.createOMText(responseRequest);  
+        return ivc.createResponse("updateResponse", "return", response, properties);
     }
 
 }

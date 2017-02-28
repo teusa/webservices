@@ -49,8 +49,8 @@ public final class PropertiesFile {
 
             // set the properties value
             prop.setProperty("SchemaIVC", "http://ivcWebServices.alcaldiabogota.gov.co/xsd");
-            prop.setProperty("RestApiFront", "http://172.31.18.14/apirest_ivc/backend/web/api/establishment");
-            //prop.setProperty("RestApiFront", "http://192.168.88.244/apirest_ivc/backend/web/api/establishment");
+            //prop.setProperty("RestApiFront", "http://172.31.18.14/apirest_ivc/backend/web/api/establishment");
+            prop.setProperty("RestApiFront", "http://192.168.88.219/apirest_ivc/backend/web/api/establishment");
             prop.setProperty("MaxTotalConnections", "20");
             prop.setProperty("ConnectionTimeout", "20000");//mills
 

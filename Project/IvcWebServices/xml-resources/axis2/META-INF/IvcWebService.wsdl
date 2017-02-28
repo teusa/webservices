@@ -22,6 +22,20 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="update">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="batch" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="updateResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="return" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="establishment">
                 <xs:complexType>
                     <xs:sequence>
@@ -87,6 +101,13 @@
     <wsdl:message name="establishmentResponse">
         <wsdl:part name="parameters" element="ns:establishmentResponse"/>
     </wsdl:message>    
+    
+    <wsdl:message name="updateRequest">
+        <wsdl:part name="parameters" element="ns:update"/>
+    </wsdl:message>
+    <wsdl:message name="updateResponse">
+        <wsdl:part name="parameters" element="ns:updateResponse"/>
+    </wsdl:message>
 
 
     <wsdl:portType name="IvcWebServicesPortType">        
@@ -97,6 +118,10 @@
         <wsdl:operation name="establishment">
             <wsdl:input message="tns:establishmentRequest" wsaw:Action="urn:establishment"/>
             <wsdl:output message="tns:establishmentResponse" wsaw:Action="urn:establishmentResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <wsdl:input message="tns:updateRequest" wsaw:Action="urn:update"/>
+            <wsdl:output message="tns:updateResponse" wsaw:Action="urn:updateResponse"/>
         </wsdl:operation>
     </wsdl:portType>
 
@@ -113,6 +138,15 @@
         </wsdl:operation>
         <wsdl:operation name="establishment">
             <soap:operation soapAction="urn:establishment" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <soap:operation soapAction="urn:update" style="document"/>
             <wsdl:input>
                 <soap:body use="literal"/>
             </wsdl:input>
@@ -141,6 +175,15 @@
                 <soap12:body use="literal"/>
             </wsdl:output>
         </wsdl:operation>
+        <wsdl:operation name="update">
+            <soap12:operation soapAction="urn:update" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
     </wsdl:binding>
     <wsdl:binding name="IvcWebServicesHttpBinding" type="tns:IvcWebServicesPortType">
         <http:binding verb="POST"/>        
@@ -155,6 +198,15 @@
         </wsdl:operation>
         <wsdl:operation name="establishment">
             <http:operation location="establishment"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="update">
+            <http:operation location="update"/>
             <wsdl:input>
                 <mime:content type="application/xml" part="parameters"/>
             </wsdl:input>

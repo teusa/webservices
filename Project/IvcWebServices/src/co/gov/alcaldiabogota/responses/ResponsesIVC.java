@@ -86,7 +86,7 @@ public class ResponsesIVC {
      * @param properties
      * @param consult_date
      * @return response of each soap server
-     * @throws javax.xml.stream.XMLStreamExceptionresponse
+     * @throws javax.xml.stream.XMLStreamException
      * @throws javax.xml.parsers.ParserConfigurationException
      * @throws java.net.MalformedURLException
      * @throws org.xml.sax.SAXException
@@ -106,6 +106,23 @@ public class ResponsesIVC {
         }
     }
     
+    public OMElement responseUpdateStablishment(String batch, Properties properties) {        
+        this.response = omFactory.createOMText(this.responseText);
+        return createResponse("synchronizeResponse", "return", this.response, properties);
+    }
+    
+    /**
+     * 
+     * @param entity_id
+     * @param table_name
+     * @param consult_date
+     * @param properties
+     * @return
+     * @throws XMLStreamException
+     * @throws MalformedURLException
+     * @throws InterruptedException
+     * @throws Exception 
+     */
     private String switchSoapEntities(String entity_id, String table_name, String consult_date, Properties properties) throws XMLStreamException, MalformedURLException, InterruptedException, Exception {   
         switch (entity_id) {
             case "1": //Ambiente
