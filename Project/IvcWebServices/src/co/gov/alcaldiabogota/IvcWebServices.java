@@ -61,7 +61,6 @@ public class IvcWebServices {
      * @param requestElement
      * @return
      * @throws XMLStreamException
-     * @throws java.io.IOException
      */
     public OMElement establishment(OMElement requestElement) throws XMLStreamException, IOException {
         String responseRequest = request.requestRestServer(properties.getProperty("RestApiFront"), parametersStablishment.setStablishmentParameters(requestElement, ivc, properties));
@@ -84,7 +83,7 @@ public class IvcWebServices {
         String batch = ivc.getRequestParam(requestElement, "batch", properties);
         String responseSoapConfecamaras = SoapConfecamaras.clientSoap(batch, request, properties);
         OMNode response = omFactory.createOMText(responseSoapConfecamaras);
-        return ivc.createResponse("updateResponse", "return", response, properties);
+        return ivc.createResponse("updateResponusuario_invalidose", "return", response, properties);
     }
 
 }
