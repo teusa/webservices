@@ -69,6 +69,17 @@ public class IvcWebServices {
         return ivc.createResponse("establishmentResponse", "return", response, properties);
     }
 
+    /**
+     * 
+     * @param requestElement
+     * @return
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws TransformerException
+     * @throws MalformedURLException
+     * @throws XMLStreamException 
+     */
     public OMElement update(OMElement requestElement) throws IOException, ParserConfigurationException, SAXException, TransformerException, MalformedURLException, XMLStreamException {
         String batch = ivc.getRequestParam(requestElement, "batch", properties);
         String responseSoapConfecamaras = SoapConfecamaras.clientSoap(batch, request, properties);
