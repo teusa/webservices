@@ -1,5 +1,7 @@
 package co.gov.alcaldiabogota;
 
+import co.gov.alcaldiabogota.clients.SoapConfecamaras;
+import co.gov.alcaldiabogota.parameters.ParametersConfecamaras;
 import co.gov.alcaldiabogota.connections.RestClient;
 import co.gov.alcaldiabogota.parameters.PropertiesFile;
 import co.gov.alcaldiabogota.parameters.Stablishment;
@@ -11,16 +13,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.axiom.om.*;
 import javax.xml.stream.XMLStreamException;
@@ -34,7 +36,6 @@ import org.apache.axiom.om.impl.dom.DocumentImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -74,8 +75,7 @@ public class IvcWebServices {
     }
 
     /**
-     * This method to build establishment object and connect to REST Server in
-     * Yii
+     * This method to build establishment object and connect to REST Server in Yii
      *
      * @param requestElement
      * @return
@@ -87,96 +87,10 @@ public class IvcWebServices {
         return ivc.createResponse("establishmentResponse", "return", response, properties);
     }
 
-    public OMElement update(OMElement requestElement) throws IOException, ParserConfigurationException, SAXException, TransformerException {
+    public OMElement update(OMElement requestElement) throws IOException, ParserConfigurationException, SAXException, TransformerException, MalformedURLException, XMLStreamException {
         String batch = ivc.getRequestParam(requestElement, "batch", properties);
-        Map<String, String> parameters = null;
-        String restURL = properties.getProperty("RestApiFront") + "?batch=" + batch;
-        String responseRequest = request.requestRestServer(restURL, parameters);
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
-        Gson gson = gsonBuilder.create();
-
-        StablishmentCCB[] stablishmentCCB = gson.fromJson(responseRequest, StablishmentCCB[].class);
-        List<StablishmentCCB> listStablishment = Arrays.asList(stablishmentCCB);
-        
-        Document xmlDoc = new DocumentImpl();                
-        
-        Element sincronizacionIVC = xmlDoc.createElement("sincronizacionIVC");
-        
-        /**
-         * fechaSincronizacion
-         */
-        Node fechaSincronizacion = xmlDoc.createElement("fechaSincronizacion");
-        fechaSincronizacion.appendChild(xmlDoc.createTextNode("AAAAMMDD"));
-        sincronizacionIVC.appendChild(fechaSincronizacion);
-        
-        /**
-         * tipoSincronizacion
-         */
-        Node tipoSincronizacion = xmlDoc.createElement("tipoSincronizacion");
-        tipoSincronizacion.appendChild(xmlDoc.createTextNode("Masiva"));
-        sincronizacionIVC.appendChild(tipoSincronizacion);
-        
-        /**
-         * numeroCamaraComercio
-         */
-        Node numeroCamaraComercio = xmlDoc.createElement("numeroCamaraComercio");
-        numeroCamaraComercio.appendChild(xmlDoc.createTextNode("04"));
-        sincronizacionIVC.appendChild(numeroCamaraComercio);
-        
-        /**
-         * usuarioAutorizado
-         */
-        Node usuarioAutorizado = xmlDoc.createElement("usuarioAutorizado");
-        usuarioAutorizado.appendChild(xmlDoc.createTextNode("wsbta2017"));
-        sincronizacionIVC.appendChild(usuarioAutorizado);
-        
-        /**
-         * claveUsuario
-         */
-        Node claveUsuario = xmlDoc.createElement("claveUsuario");
-        claveUsuario.appendChild(xmlDoc.createTextNode("bt@*2017"));
-        sincronizacionIVC.appendChild(claveUsuario);
-        
-        /**
-         * numeroRegistros
-         */
-        Node numeroRegistros = xmlDoc.createElement("numeroRegistros");
-        claveUsuario.appendChild(xmlDoc.createTextNode(""));
-        sincronizacionIVC.appendChild(claveUsuario);
-        
-        /**
-         * Multiple node:
-         * datosIdentificacion
-         */                
-        Node datosIdentificacion = xmlDoc.createElement("datosIdentificacion");
-        /*
-        Nombre
-        */
-        Node nombre = xmlDoc.createElement("nombre");
-        nombre.appendChild(xmlDoc.createTextNode(listStablishment.get(0).getName_commercial()));     
-        datosIdentificacion.appendChild(nombre);
-        /*
-        
-        */
-        
-        sincronizacionIVC.appendChild(datosIdentificacion);
-        
-        /**
-         * Save sincronizacionIVC
-         */
-        xmlDoc.appendChild(sincronizacionIVC);
-        
-        StringWriter stringWriter = new StringWriter();
-        Source source = new DOMSource(xmlDoc); 
-         
-        Transformer xformer = TransformerFactory.newInstance().newTransformer();                        
-        xformer.transform(source, new StreamResult(stringWriter));
-
-        LOGGER.log(Level.INFO, "URL: {0}, Response: {1}", new Object[]{restURL, stringWriter.toString()});
-
-        OMNode response = omFactory.createOMText(listStablishment.get(0).getName_commercial());
+        String responseSoapConfecamaras = SoapConfecamaras.clientSoap(batch, request, properties);
+        OMNode response = omFactory.createOMText(responseSoapConfecamaras);
         return ivc.createResponse("updateResponse", "return", response, properties);
     }
 

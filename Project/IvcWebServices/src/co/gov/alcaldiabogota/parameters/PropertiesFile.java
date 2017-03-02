@@ -58,6 +58,11 @@ public final class PropertiesFile {
             prop.setProperty("WsdlURLHealthEntity", "http://dev.saludcapital.gov.co/sivigiladcpruebas/WebServiceVigiaDC.asmx?wsdl");
             prop.setProperty("LoginSoapHealthEntity", "pruebasIVC");
             prop.setProperty("PasswordSoapHealthEntity", "Usu123");
+            
+            prop.setProperty("SchemaConfecamaras", "http://ivcpruebas.confecamaras.org.co/soap/ws_sync_server_nuevo");
+            prop.setProperty("WsdlURLConfecamaras", "http://ivcpruebas.confecamaras.org.co/webservices/ws_sync_server_nuevo.php?wsdl");
+            prop.setProperty("LoginSoapConfecamaras", "wsbta2017");
+            prop.setProperty("PasswordSoapConfecamaras", "bt@*2017");
 
             // save properties to file
             prop.store(output, null);

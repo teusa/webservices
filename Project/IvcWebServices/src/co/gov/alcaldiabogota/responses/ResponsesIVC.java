@@ -106,11 +106,6 @@ public class ResponsesIVC {
         }
     }
     
-    public OMElement responseUpdateStablishment(String batch, Properties properties) {        
-        this.response = omFactory.createOMText(this.responseText);
-        return createResponse("synchronizeResponse", "return", this.response, properties);
-    }
-    
     /**
      * 
      * @param entity_id
