@@ -1,41 +1,22 @@
 package co.gov.alcaldiabogota;
 
 import co.gov.alcaldiabogota.clients.SoapConfecamaras;
-import co.gov.alcaldiabogota.parameters.ParametersConfecamaras;
 import co.gov.alcaldiabogota.connections.RestClient;
 import co.gov.alcaldiabogota.parameters.PropertiesFile;
 import co.gov.alcaldiabogota.parameters.Stablishment;
-import co.gov.alcaldiabogota.parameters.StablishmentCCB;
 import co.gov.alcaldiabogota.responses.ResponsesIVC;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.axiom.om.*;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.apache.axiom.om.impl.dom.DocumentImpl;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 /**
@@ -80,6 +61,7 @@ public class IvcWebServices {
      * @param requestElement
      * @return
      * @throws XMLStreamException
+     * @throws java.io.IOException
      */
     public OMElement establishment(OMElement requestElement) throws XMLStreamException, IOException {
         String responseRequest = request.requestRestServer(properties.getProperty("RestApiFront"), parametersStablishment.setStablishmentParameters(requestElement, ivc, properties));
