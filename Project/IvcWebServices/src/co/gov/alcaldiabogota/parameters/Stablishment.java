@@ -1,7 +1,5 @@
 package co.gov.alcaldiabogota.parameters;
 
-
-
 import co.gov.alcaldiabogota.responses.ResponsesIVC;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,5 @@
 package co.gov.alcaldiabogota.parameters;
 
-import co.gov.alcaldiabogota.parameters.StablishmentCCB;
-import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

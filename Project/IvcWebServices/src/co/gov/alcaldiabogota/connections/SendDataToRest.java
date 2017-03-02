@@ -1,6 +1,5 @@
 package co.gov.alcaldiabogota.connections;
 
-import co.gov.alcaldiabogota.connections.RestClient;
 import co.gov.alcaldiabogota.utils.Utils;
 import java.io.IOException;
 import java.io.StringReader;
